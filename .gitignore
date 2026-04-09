@@ -50,3 +50,7 @@ Thumbs.db
 tmp/
 temp/
 *.tmp
+
+# PDF Output (local use only, not synced to GitHub)
+pdf-output/
+*.pdf
