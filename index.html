@@ -1,1 +1,313 @@
-[6492 chars]
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>心理咨询师考试知识库</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            padding: 40px 20px;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .stat-label {
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .main-nav {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .nav-section {
+            margin-bottom: 30px;
+        }
+
+        .nav-section h2 {
+            color: #333;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .nav-item {
+            display: block;
+            padding: 20px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 8px;
+            text-decoration: none;
+            color: #333;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .nav-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        .nav-item h3 {
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .nav-item p {
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .progress-section {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .progress-section h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .progress-bar {
+            background: #e0e0e0;
+            border-radius: 10px;
+            height: 30px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            height: 100%;
+            width: 0%;
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .stage-list {
+            list-style: none;
+            margin-top: 20px;
+        }
+
+        .stage-item {
+            padding: 15px;
+            border-left: 4px solid #ddd;
+            margin-bottom: 10px;
+            background: #f9f9f9;
+        }
+
+        .stage-item.active {
+            border-left-color: #667eea;
+            background: #f0f4ff;
+        }
+
+        .stage-item.completed {
+            border-left-color: #4caf50;
+            background: #e8f5e9;
+        }
+
+        footer {
+            text-align: center;
+            color: white;
+            margin-top: 40px;
+            padding: 20px;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .nav-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🧠 心理咨询师考试知识库</h1>
+            <p>系统化学习路径 · 每日精进 · 稳步通关</p>
+        </header>
+
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-number" id="total-days">180</div>
+                <div class="stat-label">总学习天数</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="current-day">1</div>
+                <div class="stat-label">当前进度</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="completion-rate">0%</div>
+                <div class="stat-label">完成率</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="study-hours">50</div>
+                <div class="stat-label">每日分钟</div>
+            </div>
+        </div>
+
+        <div class="main-nav">
+            <div class="nav-section">
+                <h2>📚 核心学习资源</h2>
+                <div class="nav-grid">
+                    <a href="learning-plan.md" class="nav-item">
+                        <h3>📋 学习计划</h3>
+                        <p>6 个月备考规划，六个阶段循序渐进</p>
+                    </a>
+                    <a href="daily-lessons/" class="nav-item">
+                        <h3>📖 每日课程</h3>
+                        <p>180 天详细学习内容，每天 50 分钟</p>
+                    </a>
+                    <a href="practice-questions/" class="nav-item">
+                        <h3>✍️ 习题练习</h3>
+                        <p>每日配套 10 道选择题，巩固知识点</p>
+                    </a>
+                    <a href="index.json" class="nav-item">
+                        <h3>🔍 知识索引</h3>
+                        <p>结构化知识点检索与导航</p>
+                    </a>
+                </div>
+            </div>
+
+            <div class="nav-section">
+                <h2>🎯 学习资料</h2>
+                <div class="nav-grid">
+                    <a href="daily-lessons/day-001-full.md" class="nav-item">
+                        <h3>Day 001 - 心理学概述</h3>
+                        <p>心理学的研究对象、方法与历史发展（约 25,000 字）</p>
+                    </a>
+                    <a href="practice-questions/day-001-questions.md" class="nav-item">
+                        <h3>Day 001 练习题</h3>
+                        <p>10 道选择题 + 详细解析</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="progress-section">
+            <h2>📊 学习进度追踪</h2>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill">0%</div>
+            </div>
+            
+            <ul class="stage-list">
+                <li class="stage-item active">
+                    <strong>第一阶段：基础心理学</strong>（第 1-30 天）
+                    <br>理解心理学的研究对象和方法，掌握心理过程的基本规律
+                </li>
+                <li class="stage-item">
+                    <strong>第二阶段：发展心理学</strong>（第 31-60 天）
+                    <br>了解个体从出生到死亡的毕生发展规律
+                </li>
+                <li class="stage-item">
+                    <strong>第三阶段：社会心理学</strong>（第 61-90 天）
+                    <br>研究个体在社会环境中的心理与行为
+                </li>
+                <li class="stage-item">
+                    <strong>第四阶段：变态心理学</strong>（第 91-120 天）
+                    <br>识别和理解各类心理障碍与异常行为
+                </li>
+                <li class="stage-item">
+                    <strong>第五阶段：咨询心理学</strong>（第 121-150 天）
+                    <br>掌握心理咨询的理论与技术
+                </li>
+                <li class="stage-item">
+                    <strong>第六阶段：操作技能</strong>（第 151-180 天）
+                    <br>实践应用与考试技巧训练
+                </li>
+            </ul>
+        </div>
+
+        <footer>
+            <p>💪 坚持每天进步一点点，你离心理咨询师证书又近了一天！</p>
+            <p style="margin-top: 10px; opacity: 0.8;">学习周期：180 天 | 每日投入：50 分钟自学 + 10 分钟习题</p>
+        </footer>
+    </div>
+
+    <script>
+        // 更新进度显示
+        const currentDay = 1;
+        const totalDays = 180;
+        const completionRate = Math.round((currentDay / totalDays) * 100);
+        
+        document.getElementById('current-day').textContent = currentDay;
+        document.getElementById('completion-rate').textContent = completionRate + '%';
+        
+        const progressFill = document.getElementById('progress-fill');
+        progressFill.style.width = completionRate + '%';
+        progressFill.textContent = completionRate + '%';
+    </script>
+</body>
+</html>

@@ -1,148 +1,94 @@
-<<<<<<< HEAD
 {
-  "name": "心理学知识库",
-  "description": "心理咨询师考试自学知识库",
-  "created_at": "2026-04-09",
-  "last_updated": "2026-04-09",
-  "total_lessons": 1,
-  "current_stage": 1,
-  "current_day": 1,
-  "stages": [
+  "name": "心理咨询师考试知识库",
+  "version": "1.0.0",
+  "description": "180 天系统化备考资源，涵盖基础心理学到操作技能的完整学习路径",
+  "author": "朱湛锋",
+  "repository": "https://github.com/jadevase/psychology-knowledge-base",
+  "created": "2026-04-09",
+  "updated": "2026-04-09",
+  "studyPlan": {
+    "totalDays": 180,
+    "dailyDuration": "50 分钟自学 + 10 分钟习题",
+    "stages": [
+      {
+        "id": "stage-01",
+        "name": "基础心理学",
+        "days": "1-30",
+        "topics": ["心理学概述", "感觉与知觉", "记忆", "思维", "情绪与意志", "个性心理"]
+      },
+      {
+        "id": "stage-02",
+        "name": "发展心理学",
+        "days": "31-60",
+        "topics": ["毕生发展观", "婴幼儿期", "青少年期", "成年期", "老年期"]
+      },
+      {
+        "id": "stage-03",
+        "name": "社会心理学",
+        "days": "61-90",
+        "topics": ["社会化", "社会认知", "人际关系", "群体心理", "态度与行为"]
+      },
+      {
+        "id": "stage-04",
+        "name": "变态心理学",
+        "days": "91-120",
+        "topics": ["心理障碍分类", "诊断标准", "焦虑障碍", "心境障碍", "人格障碍"]
+      },
+      {
+        "id": "stage-05",
+        "name": "咨询心理学",
+        "days": "121-150",
+        "topics": ["咨询理论", "咨询技术", "咨询伦理", "案例分析"]
+      },
+      {
+        "id": "stage-06",
+        "name": "操作技能",
+        "days": "151-180",
+        "topics": ["实践应用", "模拟考试", "答题技巧", "综合复习"]
+      }
+    ]
+  },
+  "currentLesson": {
+    "day": 1,
+    "title": "心理学的研究对象与方法",
+    "fullVersion": "daily-lessons/day-001-full.md",
+    "simplifiedVersion": "daily-lessons/day-001.md",
+    "practiceQuestions": "practice-questions/day-001-questions.md",
+    "status": "available"
+  },
+  "resources": {
+    "navigation": "index.html",
+    "readme": "README.md",
+    "learningPlan": "learning-plan.md",
+    "dailyLessons": "daily-lessons/",
+    "practiceQuestions": "practice-questions/"
+  },
+  "keyConcepts": [
     {
-      "id": 1,
-      "name": "基础心理学",
-      "description": "心理学基础理论和概念",
-      "duration_days": 30,
-      "status": "pending"
+      "term": "心理学",
+      "definition": "研究心理现象及其规律的科学"
     },
     {
-      "id": 2,
-      "name": "发展心理学",
-      "description": "个体心理发展规律",
-      "duration_days": 30,
-      "status": "pending"
+      "term": "心理过程",
+      "definition": "包括认知过程、情绪情感过程和意志过程"
     },
     {
-      "id": 3,
-      "name": "社会心理学",
-      "description": "社会互动与群体心理",
-      "duration_days": 30,
-      "status": "pending"
+      "term": "个性心理",
+      "definition": "包括个性心理倾向性和个性心理特征"
     },
     {
-      "id": 4,
-      "name": "咨询心理学",
-      "description": "心理咨询理论与技术",
-      "duration_days": 30,
-      "status": "pending"
+      "term": "实验法",
+      "definition": "在控制条件下操纵变量以确定因果关系的研究方法"
     },
     {
-      "id": 5,
-      "name": "心理诊断与测量",
-      "description": "心理评估和测量方法",
-      "duration_days": 30,
-      "status": "pending"
-    },
-    {
-      "id": 6,
-      "name": "操作技能与综合应用",
-      "description": "实践技能和综合案例分析",
-      "duration_days": 30,
-      "status": "pending"
+      "term": "潜意识",
+      "definition": "个体无法觉察的心理活动层面，包含被压抑的欲望和冲动"
     }
   ],
-  "lessons": [
-    {
-      "day": 1,
-      "topic": "心理学概述",
-      "stage": "基础心理学",
-      "date_added": "2026-04-09",
-      "lesson_file": "daily-lessons/day-001.md",
-      "questions_file": "practice-questions/day-001-questions.md"
-    }
-  ],
-  "knowledge_modules": [
-    "基础心理学",
-    "发展心理学",
-    "社会心理学",
-    "咨询心理学",
-    "心理诊断学",
-    "心理测量学",
-    "变态心理学",
-    "健康心理学"
-  ]
-=======
-{
-  "name": "心理学知识库",
-  "description": "心理咨询师考试自学知识库",
-  "created_at": "2026-04-09",
-  "last_updated": "2026-04-09",
-  "total_lessons": 1,
-  "current_stage": 1,
-  "current_day": 1,
-  "stages": [
-    {
-      "id": 1,
-      "name": "基础心理学",
-      "description": "心理学基础理论和概念",
-      "duration_days": 30,
-      "status": "pending"
-    },
-    {
-      "id": 2,
-      "name": "发展心理学",
-      "description": "个体心理发展规律",
-      "duration_days": 30,
-      "status": "pending"
-    },
-    {
-      "id": 3,
-      "name": "社会心理学",
-      "description": "社会互动与群体心理",
-      "duration_days": 30,
-      "status": "pending"
-    },
-    {
-      "id": 4,
-      "name": "咨询心理学",
-      "description": "心理咨询理论与技术",
-      "duration_days": 30,
-      "status": "pending"
-    },
-    {
-      "id": 5,
-      "name": "心理诊断与测量",
-      "description": "心理评估和测量方法",
-      "duration_days": 30,
-      "status": "pending"
-    },
-    {
-      "id": 6,
-      "name": "操作技能与综合应用",
-      "description": "实践技能和综合案例分析",
-      "duration_days": 30,
-      "status": "pending"
-    }
-  ],
-  "lessons": [
-    {
-      "day": 1,
-      "topic": "心理学概述",
-      "stage": "基础心理学",
-      "date_added": "2026-04-09",
-      "lesson_file": "daily-lessons/day-001.md",
-      "questions_file": "practice-questions/day-001-questions.md"
-    }
-  ],
-  "knowledge_modules": [
-    "基础心理学",
-    "发展心理学",
-    "社会心理学",
-    "咨询心理学",
-    "心理诊断学",
-    "心理测量学",
-    "变态心理学",
-    "健康心理学"
-  ]
->>>>>>> 8158ee41d2b2b1db583347c5e9c82ad7395537d1
+  "metadata": {
+    "language": "zh-CN",
+    "format": "Markdown",
+    "targetAudience": "心理咨询师考试备考者",
+    "license": "MIT"
+  }
 }
