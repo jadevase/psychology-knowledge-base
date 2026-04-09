@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>心理学知识库 - 心理咨询师考试自学平台</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; line-height: 1.6; color: #333; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        header { text-align: center; color: white; padding: 60px 20px; }
+        header h1 { font-size: 3em; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+        header p { font-size: 1.3em; opacity: 0.9; }
+        .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 40px 0; }
+        .stat-card { background: white; border-radius: 10px; padding: 30px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: transform 0.3s; }
+        .stat-card:hover { transform: translateY(-5px); }
+        .stat-number { font-size: 3em; font-weight: bold; color: #667eea; }
+        .stat-label { color: #666; margin-top: 10px; font-size: 1.1em; }
+        .content-section { background: white; border-radius: 10px; padding: 40px; margin: 40px 0; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .content-section h2 { color: #667eea; margin-bottom: 20px; font-size: 2em; border-bottom: 3px solid #667eea; padding-bottom: 10px; }
+        .lesson-list { list-style: none; }
+        .lesson-item { background: #f8f9fa; border-left: 4px solid #667eea; padding: 15px 20px; margin: 10px 0; border-radius: 5px; transition: all 0.3s; }
+        .lesson-item:hover { background: #e9ecef; transform: translateX(10px); }
+        .lesson-item a { text-decoration: none; color: #333; font-weight: 500; }
+        .lesson-item a:hover { color: #667eea; }
+        .lesson-meta { font-size: 0.9em; color: #666; margin-top: 5px; }
+        .stage-badge { display: inline-block; background: #667eea; color: white; padding: 3px 10px; border-radius: 20px; font-size: 0.85em; margin-right: 10px; }
+        .progress-bar { background: #e9ecef; border-radius: 10px; height: 30px; overflow: hidden; margin: 20px 0; }
+        .progress-fill { background: linear-gradient(90deg, #667eea, #764ba2); height: 100%; width: 0.56%; transition: width 0.5s; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; }
+        footer { text-align: center; color: white; padding: 40px 20px; opacity: 0.8; }
+        .btn { display: inline-block; background: #667eea; color: white; padding: 12px 30px; border-radius: 25px; text-decoration: none; font-weight: bold; margin: 10px; transition: all 0.3s; }
+        .btn:hover { background: #5568d3; transform: scale(1.05); }
+        .btn-outline { background: transparent; border: 2px solid white; }
+        .btn-outline:hover { background: white; color: #667eea; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>🧠 心理学知识库</h1>
+            <p>心理咨询师考试自学平台 | 180 天系统化学习路径</p>
+            <div style="margin-top: 30px;">
+                <a href="#lessons" class="btn">开始学习</a>
+                <a href="https://github.com/yourusername/psychology-knowledge-base" class="btn btn-outline">GitHub 仓库</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- 学习进度统计 -->
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-number" id="current-day">1</div>
+                <div class="stat-label">当前学习天数</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="total-lessons">1</div>
+                <div class="stat-label">已完成课程</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="current-stage">1</div>
+                <div class="stat-label">当前阶段</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">180</div>
+                <div class="stat-label">总课程数</div>
+            </div>
+        </div>
+
+        <!-- 进度条 -->
+        <div class="content-section">
+            <h2>📊 学习进度</h2>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill">0.56%</div>
+            </div>
+        </div>
+
+        <!-- 今日学习 -->
+        <div class="content-section">
+            <h2>📅 今日学习</h2>
+            <div class="lesson-item" style="background: #e8f4f8; border-left-color: #28a745;">
+                <span class="stage-badge">第 1 阶段</span>
+                <a href="daily-lessons/day-001.md">Day 001 - 心理学概述</a>
+                <div class="lesson-meta">建议时长：50 分钟阅读 + 10 分钟练习</div>
+            </div>
+        </div>
+
+        <!-- 课程列表 -->
+        <div class="content-section" id="lessons">
+            <h2>📚 全部课程</h2>
+            <ul class="lesson-list" id="lesson-list">
+                <li class="lesson-item">
+                    <span class="stage-badge">第 1 阶段</span>
+                    <a href="daily-lessons/day-001.md">Day 001 - 心理学概述</a>
+                    <div class="lesson-meta">基础心理学 · 2026-04-09</div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- 学习计划 -->
+        <div class="content-section">
+            <h2>🗺️ 学习路线图</h2>
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr style="background: #f8f9fa;">
+                        <th style="padding: 12px; text-align: left; border-bottom: 2px solid #ddd;">阶段</th>
+                        <th style="padding: 12px; text-align: left; border-bottom: 2px solid #ddd;">主题</th>
+                        <th style="padding: 12px; text-align: center; border-bottom: 2px solid #ddd;">天数</th>
+                        <th style="padding: 12px; text-align: left; border-bottom: 2px solid #ddd;">核心内容</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td style="padding: 12px; border-bottom: 1px solid #eee;"><strong>第一阶段</strong></td><td style="padding: 12px; border-bottom: 1px solid #eee;">基础心理学</td><td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;">Day 1-30</td><td style="padding: 12px; border-bottom: 1px solid #eee;">心理学概述、神经生理、感觉知觉、记忆思维等</td></tr>
+                    <tr><td style="padding: 12px; border-bottom: 1px solid #eee;"><strong>第二阶段</strong></td><td style="padding: 12px; border-bottom: 1px solid #eee;">发展心理学</td><td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;">Day 31-60</td><td style="padding: 12px; border-bottom: 1px solid #eee;">胎儿到老年各阶段心理发展规律</td></tr>
+                    <tr><td style="padding: 12px; border-bottom: 1px solid #eee;"><strong>第三阶段</strong></td><td style="padding: 12px; border-bottom: 1px solid #eee;">社会心理学</td><td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;">Day 61-90</td><td style="padding: 12px; border-bottom: 1px solid #eee;">社会认知、态度、人际关系、群体心理</td></tr>
+                    <tr><td style="padding: 12px; border-bottom: 1px solid #eee;"><strong>第四阶段</strong></td><td style="padding: 12px; border-bottom: 1px solid #eee;">咨询心理学</td><td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;">Day 91-120</td><td style="padding: 12px; border-bottom: 1px solid #eee;">精神分析、行为疗法、认知疗法等</td></tr>
+                    <tr><td style="padding: 12px; border-bottom: 1px solid #eee;"><strong>第五阶段</strong></td><td style="padding: 12px; border-bottom: 1px solid #eee;">心理诊断与测量</td><td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;">Day 121-150</td><td style="padding: 12px; border-bottom: 1px solid #eee;">心理评估、测量学基础、智力人格测验</td></tr>
+                    <tr><td style="padding: 12px;"><strong>第六阶段</strong></td><td style="padding: 12px;">操作技能与综合应用</td><td style="padding: 12px; text-align: center;">Day 151-180</td><td style="padding: 12px;">障碍识别、危机干预、案例分析、伦理规范</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>© 2026 心理学知识库 | Author: 朱湛锋</p>
+            <p style="margin-top: 10px;">
+                <a href="https://github.com/yourusername/psychology-knowledge-base" style="color: white; text-decoration: underline;">GitHub 仓库</a> | 
+                <a href="USER_GUIDE.md" style="color: white; text-decoration: underline;">使用指南</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // 加载学习进度数据
+        fetch('index.json')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('current-day').textContent = data.current_day;
+                document.getElementById('total-lessons').textContent = data.total_lessons;
+                document.getElementById('current-stage').textContent = data.current_stage;
+                
+                const progress = (data.total_lessons / 180 * 100).toFixed(2);
+                document.getElementById('progress-fill').style.width = progress + '%';
+                document.getElementById('progress-fill').textContent = progress + '%';
+            })
+            .catch(err => console.error('加载进度数据失败:', err));
+        
+        // 加载课程列表
+        fetch('index.json')
+            .then(response => response.json())
+            .then(data => {
+                const lessonList = document.getElementById('lesson-list');
+                if (data.lessons && data.lessons.length > 1) {
+                    lessonList.innerHTML = '';
+                    data.lessons.forEach(lesson => {
+                        const li = document.createElement('li');
+                        li.className = 'lesson-item';
+                        li.innerHTML = `
+                            <span class="stage-badge">${lesson.stage}</span>
+                            <a href="${lesson.lesson_file}">${lesson.topic}</a>
+                            <div class="lesson-meta">${lesson.date_added}</div>
+                        `;
+                        lessonList.appendChild(li);
+                    });
+                }
+            })
+            .catch(err => console.error('加载课程列表失败:', err));
+    </script>
+</body>
+</html>

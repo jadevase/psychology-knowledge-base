@@ -1,0 +1,73 @@
+{
+  "name": "心理学知识库",
+  "description": "心理咨询师考试自学知识库",
+  "created_at": "2026-04-09",
+  "last_updated": "2026-04-09",
+  "total_lessons": 1,
+  "current_stage": 1,
+  "current_day": 1,
+  "stages": [
+    {
+      "id": 1,
+      "name": "基础心理学",
+      "description": "心理学基础理论和概念",
+      "duration_days": 30,
+      "status": "pending"
+    },
+    {
+      "id": 2,
+      "name": "发展心理学",
+      "description": "个体心理发展规律",
+      "duration_days": 30,
+      "status": "pending"
+    },
+    {
+      "id": 3,
+      "name": "社会心理学",
+      "description": "社会互动与群体心理",
+      "duration_days": 30,
+      "status": "pending"
+    },
+    {
+      "id": 4,
+      "name": "咨询心理学",
+      "description": "心理咨询理论与技术",
+      "duration_days": 30,
+      "status": "pending"
+    },
+    {
+      "id": 5,
+      "name": "心理诊断与测量",
+      "description": "心理评估和测量方法",
+      "duration_days": 30,
+      "status": "pending"
+    },
+    {
+      "id": 6,
+      "name": "操作技能与综合应用",
+      "description": "实践技能和综合案例分析",
+      "duration_days": 30,
+      "status": "pending"
+    }
+  ],
+  "lessons": [
+    {
+      "day": 1,
+      "topic": "心理学概述",
+      "stage": "基础心理学",
+      "date_added": "2026-04-09",
+      "lesson_file": "daily-lessons/day-001.md",
+      "questions_file": "practice-questions/day-001-questions.md"
+    }
+  ],
+  "knowledge_modules": [
+    "基础心理学",
+    "发展心理学",
+    "社会心理学",
+    "咨询心理学",
+    "心理诊断学",
+    "心理测量学",
+    "变态心理学",
+    "健康心理学"
+  ]
+}
