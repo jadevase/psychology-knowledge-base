@@ -128,20 +128,37 @@
   },
   "lessons": [
     {
-      "day": 2,
-      "title": "心理学概述",
+      "day": 1,
+      "title": "心理学的研究对象与方法",
       "stage_id": 1,
       "stage_name": "基础心理学",
-      "date": "2026-04-09",
-      "file_path": "daily-lessons/day-002.md",
+      "date": "2026-04-10",
+      "file_path": "daily-lessons/day-001-full.md",
+      "simple_path": "daily-lessons/day-001.md",
+      "questions_path": "practice-questions/day-001-questions.md",
+      "tags": [
+        "基础心理学",
+        "心理学基础"
+      ],
+      "status": "completed"
+    },
+    {
+      "day": 2,
+      "title": "心理学的历史发展与主要流派",
+      "stage_id": 1,
+      "stage_name": "基础心理学",
+      "date": "2026-04-10",
+      "file_path": "daily-lessons/day-002-full.md",
+      "simple_path": "daily-lessons/day-002.md",
       "questions_path": "practice-questions/day-002-questions.md",
       "tags": [
         "基础心理学",
-        "心理学概述"
+        "心理学基础"
       ],
       "status": "completed"
     }
   ],
-  "total_lessons": 1,
-  "last_updated": "2026-04-09"
+  "total_lessons": 2,
+  "last_updated": "2026-04-10",
+  "current_day": 2
 }
