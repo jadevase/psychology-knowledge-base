@@ -278,7 +278,10 @@ def update_index(base_path, day, title):
             "knowledge_modules": ["基础心理学", "发展心理学", "社会心理学", "咨询心理学", "心理诊断学", "心理测量学"]
         }
     
-    # 添加课程记录
+    # 添加课程记录到 lessons 数组（如果不存在则初始化）
+    if "lessons" not in index:
+        index["lessons"] = []
+    
     lesson_record = {
         "day": day,
         "title": title,
@@ -287,7 +290,7 @@ def update_index(base_path, day, title):
         "date": today,
         "file_path": f"daily-lessons/day-{day:03d}.md",
         "questions_path": f"practice-questions/day-{day:03d}-questions.md",
-        "tags": [stage["stage_name"], topic],
+        "tags": [stage["stage_name"], title],
         "status": "completed"
     }
     
@@ -298,9 +301,14 @@ def update_index(base_path, day, title):
     else:
         index["lessons"].append(lesson_record)
     
-    # 更新进度
-    if day > index.get("current_day", 0):
-        index["current_day"] = day
+    # 更新进度（使用 current_day 字段，如果不存在则使用 currentLesson.day）
+    current_day_key = "current_day" if "current_day" in index else None
+    if current_day_key is None and "currentLesson" in index and "day" in index["currentLesson"]:
+        # 兼容旧格式
+        current_day_key = None  # 不更新，保持原有结构
+    
+    if current_day_key and day > index.get(current_day_key, 0):
+        index[current_day_key] = day
         if day<= 30:
             index["current_stage"] = 1
             index["stages"][0]["status"] = "in_progress"
