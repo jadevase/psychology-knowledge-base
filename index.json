@@ -21,7 +21,8 @@
           "思维",
           "情绪与意志",
           "个性心理"
-        ]
+        ],
+        "status": "in_progress"
       },
       {
         "id": "stage-02",
@@ -144,7 +145,7 @@
     },
     {
       "day": 2,
-      "title": "心理学的历史发展与主要流派",
+      "title": "心理学概述",
       "stage_id": 1,
       "stage_name": "基础心理学",
       "date": "2026-04-10",
@@ -153,12 +154,74 @@
       "questions_path": "practice-questions/day-002-questions.md",
       "tags": [
         "基础心理学",
-        "心理学基础"
+        "心理学基础",
+        "认知过程"
       ],
       "status": "completed"
+    },
+    {
+      "day": 3,
+      "title": "心理学概述",
+      "stage_id": 1,
+      "stage_name": "基础心理学",
+      "date": "2026-04-10",
+      "file_path": "daily-lessons/day-003-full.md",
+      "questions_path": "practice-questions/day-003-questions.md",
+      "tags": [
+        "基础心理学",
+        "心理学基础",
+        "认知过程"
+      ],
+      "status": "completed",
+      "simple_path": "daily-lessons/day-003.md"
     }
   ],
-  "total_lessons": 2,
+  "total_lessons": 3,
   "last_updated": "2026-04-10",
-  "current_day": 2
+  "current_day": 3,
+  "current_stage": 1,
+  "stages": [
+    {
+      "id": 1,
+      "name": "基础心理学",
+      "description": "心理学概述",
+      "duration_days": 30,
+      "status": "pending"
+    },
+    {
+      "id": 2,
+      "name": "发展心理学",
+      "description": "毕生发展观",
+      "duration_days": 30,
+      "status": "pending"
+    },
+    {
+      "id": 3,
+      "name": "社会心理学",
+      "description": "社会化",
+      "duration_days": 30,
+      "status": "pending"
+    },
+    {
+      "id": 4,
+      "name": "变态心理学",
+      "description": "心理障碍分类",
+      "duration_days": 30,
+      "status": "pending"
+    },
+    {
+      "id": 5,
+      "name": "咨询心理学",
+      "description": "咨询理论",
+      "duration_days": 30,
+      "status": "pending"
+    },
+    {
+      "id": 6,
+      "name": "操作技能",
+      "description": "实践应用",
+      "duration_days": 30,
+      "status": "pending"
+    }
+  ]
 }

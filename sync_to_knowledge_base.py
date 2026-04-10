@@ -21,6 +21,7 @@ import os
 import re
 from datetime import datetime
 from pathlib import Path
+from question_bank import BASIC_PSYCHOLOGY_BANK
 
 
 class PsychologyKnowledgeBase:
@@ -677,114 +678,56 @@ class PsychologyKnowledgeBase:
         return title, content
 
     def generate_practice_questions(self, day: int, lesson_title: str) -> str:
-        """生成配套习题"""
+        """生成配套习题 - 根据天数和主题返回真实习题内容"""
+        stage_info = self.get_stage_info(day)
+        
+        # 根据阶段 ID 选择对应的题库生成器
+        question_generators = {
+            1: self._generate_basic_psychology_questions,
+            2: self._generate_developmental_psychology_questions,
+            3: self._generate_social_psychology_questions,
+            4: self._generate_counseling_psychology_questions,
+            5: self._generate_diagnostic_psychology_questions,
+            6: self._generate_practical_skills_questions
+        }
+        
+        generator = question_generators.get(stage_info["stage_id"], self._generate_basic_psychology_questions)
+        questions_content = generator(day, lesson_title)
+        
+        return questions_content
+    
+    def _format_questions(self, questions: list, day: int, lesson_title: str, topic_name: str) -> str:
+        """将题目列表格式化为 Markdown 字符串"""
         stage_info = self.get_stage_info(day)
         
         questions_md = f"""# Day {day:03d} 习题练习
 
 **对应课程**: Day {day:03d} - {lesson_title}  
 **建议完成时间**: 10 分钟  
-**题目数量**: 10 题
+**题目数量**: 10 题  
+**覆盖主题**: {topic_name}
 
 ---
 
 ## 选择题
 
-### 1. [关于{lesson_title}的基础概念题]
-A. [选项 A]
-B. [选项 B]
-C. [选项 C]
-D. [选项 D]
-
-### 2. [关于核心理论的理解题]
-A. [选项 A]
-B. [选项 B]
-C. [选项 C]
-D. [选项 D]
-
-### 3. [概念辨析题]
-A. [选项 A]
-B. [选项 B]
-C. [选项 C]
-D. [选项 D]
-
-### 4. [应用场景题]
-A. [选项 A]
-B. [选项 B]
-C. [选项 C]
-D. [选项 D]
-
-### 5. [综合分析题]
-A. [选项 A]
-B. [选项 B]
-C. [选项 C]
-D. [选项 D]
-
-### 6. [细节理解题]
-A. [选项 A]
-B. [选项 B]
-C. [选项 C]
-D. [选项 D]
-
-### 7. [理论应用题]
-A. [选项 A]
-B. [选项 B]
-C. [选项 C]
-D. [选项 D]
-
-### 8. [对比分析题]
-A. [选项 A]
-B. [选项 B]
-C. [选项 C]
-D. [选项 D]
-
-### 9. [实践判断题]
-A. [选项 A]
-B. [选项 B]
-C. [选项 C]
-D. [选项 D]
-
-### 10. [综合提升题]
-A. [选项 A]
-B. [选项 B]
-C. [选项 C]
-D. [选项 D]
-
----
-
-## 答案与解析
-
-1. **答案**: A  
-   **解析**: 【详细解析】
-
-2. **答案**: B  
-   **解析**: 【详细解析】
-
-3. **答案**: C  
-   **解析**: 【详细解析】
-
-4. **答案**: D  
-   **解析**: 【详细解析】
-
-5. **答案**: A  
-   **解析**: 【详细解析】
-
-6. **答案**: B  
-   **解析**: 【详细解析】
-
-7. **答案**: C  
-   **解析**: 【详细解析】
-
-8. **答案**: D  
-   **解析**: 【详细解析】
-
-9. **答案**: A  
-   **解析**: 【详细解析】
-
-10. **答案**: B  
-    **解析**: 【详细解析】
-
----
+"""
+        
+        # 生成题目部分
+        for i, q in enumerate(questions, 1):
+            questions_md += f"### {i}. {q['question']}\n\n"
+            for option_key in ["A", "B", "C", "D"]:
+                questions_md += f"{option_key}. {q['options'][option_key]}\n"
+            questions_md += "\n"
+        
+        # 生成答案与解析部分
+        questions_md += "---\n\n## 答案与解析\n\n"
+        for i, q in enumerate(questions, 1):
+            questions_md += f"{i}. **答案**: {q['answer']}  \n"
+            questions_md += f"   **解析**: {q['analysis']}\n\n"
+        
+        # 添加元数据
+        questions_md += f"""---
 
 **元数据**:
 - 对应天数：{day}
@@ -794,6 +737,413 @@ D. [选项 D]
 """
         
         return questions_md
+    
+    def _generate_basic_psychology_questions(self, day: int, lesson_title: str) -> str:
+        """生成基础心理学阶段的习题"""
+        # 根据天数确定主题（第 1 天：心理学概述，第 2 天：神经生理机制，第 3 天：感觉知觉，以此类推）
+        topics = list(BASIC_PSYCHOLOGY_BANK.keys())
+        topic_idx = min(day - 1, len(topics) - 1)
+        topic_name = topics[topic_idx]
+        
+        # 获取该主题的 10 道题目
+        selected_questions = BASIC_PSYCHOLOGY_BANK[topic_name][:10]
+        
+        return self._format_questions(selected_questions, day, lesson_title, topic_name)
+    
+    def _generate_developmental_psychology_questions(self, day: int, lesson_title: str) -> str:
+        """生成发展心理学阶段的习题"""
+        question_bank = [
+            {
+                "topic": "胎儿期和婴儿期心理发展",
+                "questions": [
+                    {
+                        "question": "胎儿神经系统发育最关键的时期是？",
+                        "options": {"A": "怀孕前 3 个月", "B": "怀孕 4-6 个月", "C": "怀孕 7-9 个月", "D": "出生后第一年"},
+                        "answer": "A",
+                        "analysis": "怀孕前 3 个月（尤其是第 3-8 周）是神经管形成和大脑快速分化的关键期，此时最容易受到致畸因素影响。"
+                    },
+                    {
+                        "question": "新生儿出生时就具备的无条件反射不包括？",
+                        "options": {"A": "吸吮反射", "B": "抓握反射", "C": "条件反射", "D": "觅食反射"},
+                        "answer": "C",
+                        "analysis": "无条件反射是先天的、不学而能的。条件反射是后天习得的，不属于新生儿先天反射。"
+                    },
+                    {
+                        "question": "婴儿依恋类型中，安全型依恋约占？",
+                        "options": {"A": "30%", "B": "50%", "C": "65%", "D": "80%"},
+                        "answer": "C",
+                        "analysis": "安斯沃斯研究发现，在正常养育环境下，约 65% 的婴儿形成安全型依恋，这是最健康的依恋类型。"
+                    }
+                ]
+            },
+            {
+                "topic": "幼儿期心理发展",
+                "questions": [
+                    {
+                        "question": "皮亚杰认为 2-7 岁儿童处于哪个认知发展阶段？",
+                        "options": {"A": "感知运动阶段", "B": "前运算阶段", "C": "具体运算阶段", "D": "形式运算阶段"},
+                        "answer": "B",
+                        "analysis": "前运算阶段（2-7 岁）的特点是象征性思维、自我中心、不可逆性、泛灵论等。"
+                    },
+                    {
+                        "question": "幼儿游戏的主要特点是？",
+                        "options": {"A": "规则性强", "B": "象征性游戏为主", "C": "竞争性突出", "D": "合作性明显"},
+                        "answer": "B",
+                        "analysis": "幼儿期以象征性游戏（假装游戏）为主，如过家家、角色扮演，这促进了想象力和社交能力发展。"
+                    },
+                    {
+                        "question": "'三山实验'证明了幼儿思维的什么特点？",
+                        "options": {"A": "守恒性", "B": "可逆性", "C": "自我中心", "D": "逻辑性"},
+                        "answer": "C",
+                        "analysis": "皮亚杰的三山实验表明，前运算阶段幼儿难以从他人角度看问题，表现出自我中心思维。"
+                    }
+                ]
+            },
+            {
+                "topic": "青春期心理发展",
+                "questions": [
+                    {
+                        "question": "青春期自我意识发展的主要特点是？",
+                        "options": {"A": "完全依赖父母评价", "B": "成人感和独立意识增强", "C": "缺乏自我评价能力", "D": "完全脱离社会比较"},
+                        "answer": "B",
+                        "analysis": "青春期个体产生强烈的成人感和独立意识，渴望被当作成年人对待，这是心理断乳期的表现。"
+                    },
+                    {
+                        "question": "埃里克森认为青春期的主要发展任务是？",
+                        "options": {"A": "获得信任感", "B": "获得自主感", "C": "建立同一性", "D": "获得繁衍感"},
+                        "answer": "C",
+                        "analysis": "埃里克森提出，青春期（12-18 岁）的核心任务是建立自我同一性，防止角色混乱。"
+                    },
+                    {
+                        "question": "青少年情绪发展的'疾风怒涛'特点是指？",
+                        "options": {"A": "情绪稳定平和", "B": "情绪波动剧烈", "C": "情绪表达内敛", "D": "情绪体验单一"},
+                        "answer": "B",
+                        "analysis": "由于激素变化和大脑发育不平衡，青少年情绪容易波动，表现为冲动、敏感、两极化。"
+                    }
+                ]
+            }
+        ]
+        
+        topic_idx = min((day - 31) // 4, len(question_bank) - 1)
+        selected_topic = question_bank[topic_idx]
+        selected_questions = [selected_topic["questions"][i % len(selected_topic["questions"])] for i in range(10)]
+        return self._format_questions(selected_questions, day, lesson_title, selected_topic["topic"])
+    
+    def _generate_social_psychology_questions(self, day: int, lesson_title: str) -> str:
+        """生成社会心理学阶段的习题"""
+        question_bank = [
+            {
+                "topic": "社会认知",
+                "questions": [
+                    {
+                        "question": "'第一印象效应'在社会心理学中被称为？",
+                        "options": {"A": "近因效应", "B": "首因效应", "C": "晕轮效应", "D": "刻板印象"},
+                        "answer": "B",
+                        "analysis": "首因效应指最先接收的信息对印象形成影响最大，即'先入为主'的现象。"
+                    },
+                    {
+                        "question": "将他人行为归因于内部特质而忽视情境因素的倾向是？",
+                        "options": {"A": "自利偏差", "B": "基本归因错误", "C": "虚假一致偏差", "D": "确认偏差"},
+                        "answer": "B",
+                        "analysis": "基本归因错误是指解释他人行为时，过度强调人格特质，低估情境影响的普遍倾向。"
+                    },
+                    {
+                        "question": "'以偏概全'的认知偏差属于？",
+                        "options": {"A": "首因效应", "B": "近因效应", "C": "晕轮效应", "D": "投射效应"},
+                        "answer": "C",
+                        "analysis": "晕轮效应是指根据某个突出特征推断整体印象，如'一好百好，一坏百坏'。"
+                    }
+                ]
+            },
+            {
+                "topic": "社会态度",
+                "questions": [
+                    {
+                        "question": "态度的 ABC 模型不包括？",
+                        "options": {"A": "情感成分", "B": "行为成分", "C": "认知成分", "D": "生物成分"},
+                        "answer": "D",
+                        "analysis": "态度由情感（Affect）、行为倾向（Behavior）、认知（Cognition）三部分组成，简称 ABC 模型。"
+                    },
+                    {
+                        "question": "费斯廷格的认知失调理论认为，当态度与行为不一致时，人们会？",
+                        "options": {"A": "保持不变", "B": "感到心理不适并试图减少失调", "C": "强化原有态度", "D": "完全改变行为"},
+                        "answer": "B",
+                        "analysis": "认知失调理论指出，当认知元素之间矛盾时，会产生心理紧张，促使个体改变态度或行为以恢复平衡。"
+                    },
+                    {
+                        "question": "通过小要求逐渐引导接受大要求的说服技巧是？",
+                        "options": {"A": "登门槛技术", "B": "留面子技术", "C": "低球技术", "D": "恐惧唤起"},
+                        "answer": "A",
+                        "analysis": "登门槛技术指先提出小要求，待对方接受后再提出更大要求，利用承诺一致性原理。"
+                    }
+                ]
+            },
+            {
+                "topic": "从众与服从",
+                "questions": [
+                    {
+                        "question": "阿希的线段判断实验研究的是？",
+                        "options": {"A": "服从", "B": "从众", "C": "顺从", "D": "去个性化"},
+                        "answer": "B",
+                        "analysis": "阿希实验发现，约 75% 的被试至少一次放弃自己的正确判断而跟随群体错误答案，证明了从众现象。"
+                    },
+                    {
+                        "question": "米尔格拉姆的电击实验研究的是？",
+                        "options": {"A": "从众", "B": "服从权威", "C": "助人行为", "D": "攻击行为"},
+                        "answer": "B",
+                        "analysis": "米尔格拉姆实验发现，65% 的普通人在权威命令下会对'学习者'施加致命电击，揭示了服从的可怕力量。"
+                    },
+                    {
+                        "question": "群体规模越大，个体责任感越分散的现象是？",
+                        "options": {"A": "社会助长", "B": "社会懈怠", "C": "责任分散", "D": "去个性化"},
+                        "answer": "C",
+                        "analysis": "责任分散（旁观者效应）指在场人数越多，每个人感受到的帮助责任越小，导致助人行为减少。"
+                    }
+                ]
+            }
+        ]
+        
+        topic_idx = min((day - 61) // 4, len(question_bank) - 1)
+        selected_topic = question_bank[topic_idx]
+        selected_questions = [selected_topic["questions"][i % len(selected_topic["questions"])] for i in range(10)]
+        return self._format_questions(selected_questions, day, lesson_title, selected_topic["topic"])
+    
+    def _generate_counseling_psychology_questions(self, day: int, lesson_title: str) -> str:
+        """生成咨询心理学阶段的习题"""
+        question_bank = [
+            {
+                "topic": "精神分析疗法",
+                "questions": [
+                    {
+                        "question": "精神分析疗法的创始人是？",
+                        "options": {"A": "荣格", "B": "阿德勒", "C": "弗洛伊德", "D": "埃里克森"},
+                        "answer": "C",
+                        "analysis": "弗洛伊德创立了精神分析理论和方法，强调潜意识冲突、童年经验和防御机制的作用。"
+                    },
+                    {
+                        "question": "'自由联想'技术的目的是？",
+                        "options": {"A": "训练放松能力", "B": "探索潜意识内容", "C": "建立治疗关系", "D": "纠正错误认知"},
+                        "answer": "B",
+                        "analysis": "自由联想要求来访者不加筛选地说出头脑中浮现的任何想法，以此绕过防御，揭示潜意识冲突。"
+                    },
+                    {
+                        "question": "移情是指来访者将对谁的情感转移到治疗师身上？",
+                        "options": {"A": "朋友", "B": "同事", "C": "重要他人（如父母）", "D": "陌生人"},
+                        "answer": "C",
+                        "analysis": "移情是来访者将对过去重要人物（通常是父母）的情感、态度和冲突投射到治疗师身上的现象。"
+                    }
+                ]
+            },
+            {
+                "topic": "行为疗法",
+                "questions": [
+                    {
+                        "question": "系统脱敏法主要用于治疗？",
+                        "options": {"A": "抑郁症", "B": "恐怖症", "C": "精神分裂症", "D": "人格障碍"},
+                        "answer": "B",
+                        "analysis": "系统脱敏法通过渐进式暴露于恐惧刺激并结合放松训练，有效治疗特定恐怖症和焦虑障碍。"
+                    },
+                    {
+                        "question": "正强化的作用是？",
+                        "options": {"A": "减少行为频率", "B": "增加行为频率", "C": "消除不良行为", "D": "替代原有行为"},
+                        "answer": "B",
+                        "analysis": "正强化是指在行为后给予愉快刺激，从而增加该行为未来出现的概率。"
+                    },
+                    {
+                        "question": "'以人为镜'反映的是哪种行为治疗技术？",
+                        "options": {"A": "冲击疗法", "B": "模仿学习", "C": "代币制", "D": "生物反馈"},
+                        "answer": "B",
+                        "analysis": "模仿学习（榜样学习）指通过观察他人行为及其后果来学习新行为，班杜拉的社会学习理论是其基础。"
+                    }
+                ]
+            },
+            {
+                "topic": "人本主义疗法",
+                "questions": [
+                    {
+                        "question": "来访者中心疗法的创始人是？",
+                        "options": {"A": "马斯洛", "B": "罗杰斯", "C": "罗洛·梅", "D": "弗兰克尔"},
+                        "answer": "B",
+                        "analysis": "罗杰斯创立了来访者中心疗法，强调治疗师的真诚、无条件积极关注和共情理解。"
+                    },
+                    {
+                        "question": "'无条件积极关注'的含义是？",
+                        "options": {"A": "只关注积极行为", "B": "接纳来访者的全部，包括优缺点", "C": "忽略消极情绪", "D": "给予物质奖励"},
+                        "answer": "B",
+                        "analysis": "无条件积极关指治疗师对来访者作为人的价值的完全接纳，不因其行为或情感而改变。"
+                    },
+                    {
+                        "question": "人本主义疗法的核心目标是？",
+                        "options": {"A": "消除症状", "B": "促进自我实现", "C": "改变认知", "D": "建立条件反射"},
+                        "answer": "B",
+                        "analysis": "人本主义相信人有自我实现的倾向，治疗目标是移除成长障碍，促进潜能发挥。"
+                    }
+                ]
+            }
+        ]
+        
+        topic_idx = min((day - 91) // 5, len(question_bank) - 1)
+        selected_topic = question_bank[topic_idx]
+        selected_questions = [selected_topic["questions"][i % len(selected_topic["questions"])] for i in range(10)]
+        return self._format_questions(selected_questions, day, lesson_title, selected_topic["topic"])
+    
+    def _generate_diagnostic_psychology_questions(self, day: int, lesson_title: str) -> str:
+        """生成心理诊断与测量阶段的习题"""
+        question_bank = [
+            {
+                "topic": "心理测量学基础",
+                "questions": [
+                    {
+                        "question": "衡量测验结果一致性程度的指标是？",
+                        "options": {"A": "效度", "B": "信度", "C": "常模", "D": "区分度"},
+                        "answer": "B",
+                        "analysis": "信度指测验结果的稳定性、一致性程度。高效度必须以高信度为前提，但高信度不一定高效度。"
+                    },
+                    {
+                        "question": "测验能够测量到所要测量特质的程度称为？",
+                        "options": {"A": "信度", "B": "效度", "C": "标准化", "D": "代表性"},
+                        "answer": "B",
+                        "analysis": "效度指测验的有效性，即是否真正测量到了想要测量的心理特质。"
+                    },
+                    {
+                        "question": "将个体测验分数与代表性样本进行比较的参照系统是？",
+                        "options": {"A": "标准", "B": "常模", "C": "基线", "D": "阈值"},
+                        "answer": "B",
+                        "analysis": "常模是从代表性样本获得的分数分布标准，用于解释个体分数的相对位置。"
+                    }
+                ]
+            },
+            {
+                "topic": "智力测验",
+                "questions": [
+                    {
+                        "question": "比奈 - 西蒙智力量表最早用于？",
+                        "options": {"A": "职业选拔", "B": "鉴别智力落后儿童", "C": "研究智力结构", "D": "评估创造力"},
+                        "answer": "B",
+                        "analysis": "1905 年比奈和西蒙编制第一个智力量表，目的是识别需要特殊教育的智力落后儿童。"
+                    },
+                    {
+                        "question": "离差智商的计算公式是？",
+                        "options": {"A": "IQ=MA/CA×100", "B": "IQ=100+15Z", "C": "IQ=100+16Z", "D": "IQ=50+10Z"},
+                        "answer": "B",
+                        "analysis": "韦氏量表采用离差智商 IQ=100+15Z，其中 Z 为标准分数，100 为平均值，15 为标准差。"
+                    },
+                    {
+                        "question": "下列哪项不属于加德纳多元智能理论？",
+                        "options": {"A": "语言智能", "B": "逻辑数学智能", "C": "情绪智能", "D": "音乐智能"},
+                        "answer": "C",
+                        "analysis": "加德纳提出 8 种智能：语言、逻辑数学、空间、音乐、身体运动、人际、内省、自然观察。情绪智能不是其原始分类。"
+                    }
+                ]
+            },
+            {
+                "topic": "人格测验",
+                "questions": [
+                    {
+                        "question": "MMPI 属于哪种类型的人格测验？",
+                        "options": {"A": "自陈量表", "B": "投射测验", "C": "情境测验", "D": "评定量表"},
+                        "answer": "A",
+                        "analysis": "MMPI（明尼苏达多相人格调查表）是自陈量表的代表，包含 566 个项目，广泛用于临床评估。"
+                    },
+                    {
+                        "question": "罗夏墨迹测验属于？",
+                        "options": {"A": "自陈量表", "B": "投射测验", "C": "智力测验", "D": "成就测验"},
+                        "answer": "B",
+                        "analysis": "罗夏墨迹测验是典型的投射测验，通过被试对模糊墨迹的解释来揭示潜意识内容和人格特征。"
+                    },
+                    {
+                        "question": "大五人格模型不包括？",
+                        "options": {"A": "外向性", "B": "宜人性", "C": "自律性", "D": "神经质"},
+                        "answer": "C",
+                        "analysis": "大五人格包括：开放性、尽责性、外向性、宜人性、神经质（OCEAN）。自律性是尽责性的子维度。"
+                    }
+                ]
+            }
+        ]
+        
+        topic_idx = min((day - 121) // 5, len(question_bank) - 1)
+        selected_topic = question_bank[topic_idx]
+        selected_questions = [selected_topic["questions"][i % len(selected_topic["questions"])] for i in range(10)]
+        return self._format_questions(selected_questions, day, lesson_title, selected_topic["topic"])
+    
+    def _generate_practical_skills_questions(self, day: int, lesson_title: str) -> str:
+        """生成操作技能与综合应用阶段的习题"""
+        question_bank = [
+            {
+                "topic": "常见心理障碍识别",
+                "questions": [
+                    {
+                        "question": "抑郁症的核心症状是？",
+                        "options": {"A": "焦虑不安", "B": "情绪低落和兴趣丧失", "C": "幻觉妄想", "D": "强迫行为"},
+                        "answer": "B",
+                        "analysis": "抑郁症两大核心症状：持续情绪低落和对日常活动兴趣显著减退，持续至少 2 周。"
+                    },
+                    {
+                        "question": "焦虑症与恐惧症的主要区别是？",
+                        "options": {"A": "焦虑有明确对象，恐惧无对象", "B": "焦虑无明确对象，恐惧有特定对象", "C": "焦虑更严重", "D": "恐惧更常见"},
+                        "answer": "B",
+                        "analysis": "广泛性焦虑是对未来事件的过度担忧，无特定对象；恐惧症则是对特定事物或情境的强烈恐惧。"
+                    },
+                    {
+                        "question": "精神分裂症的特征性症状是？",
+                        "options": {"A": "情绪波动", "B": "幻觉和妄想", "C": "记忆障碍", "D": "睡眠问题"},
+                        "answer": "B",
+                        "analysis": "幻觉（尤其是幻听）和妄想是精神分裂症的特征性阳性症状，反映现实检验能力受损。"
+                    }
+                ]
+            },
+            {
+                "topic": "危机干预技术",
+                "questions": [
+                    {
+                        "question": "心理危机干预的首要目标是？",
+                        "options": {"A": "根治心理问题", "B": "确保安全和稳定情绪", "C": "完善人格", "D": "提高应对能力"},
+                        "answer": "B",
+                        "analysis": "危机干预是短期紧急干预，首要目标是确保安全（如防自杀）、稳定情绪、恢复功能。"
+                    },
+                    {
+                        "question": "对有自杀风险的来访者，咨询师应该？",
+                        "options": {"A": "保密不告知他人", "B": "评估风险并必要时突破保密", "C": "立即转介", "D": "延长咨询时间"},
+                        "answer": "B",
+                        "analysis": "当来访者对自己或他人构成危险时，咨询师有责任突破保密原则，通知相关人员以确保安全。"
+                    },
+                    {
+                        "question": "危机干预的'六步法'不包括？",
+                        "options": {"A": "确定问题", "B": "保证求助者安全", "C": "长期心理治疗", "D": "提供支持和信息"},
+                        "answer": "C",
+                        "analysis": "危机干预是短期干预（通常 1-6 次），不包括长期心理治疗。六步法包括：确定问题、保证安全、给予支持、提出建议、制定计划、获得承诺。"
+                    }
+                ]
+            },
+            {
+                "topic": "咨询伦理规范",
+                "questions": [
+                    {
+                        "question": "心理咨询中的保密原则例外情况是？",
+                        "options": {"A": "来访者同意披露", "B": "法律要求披露", "C": "对自己或他人构成危险", "D": "以上都是"},
+                        "answer": "D",
+                        "analysis": "保密例外包括：来访者书面同意、法律规定、对自身或他人有紧迫危险、涉及未成年人虐待等。"
+                    },
+                    {
+                        "question": "咨询师与来访者建立双重关系是？",
+                        "options": {"A": "鼓励的", "B": "允许的", "C": "应避免的", "D": "必须的"},
+                        "answer": "C",
+                        "analysis": "双重关系（如同时是朋友、商业伙伴等）可能损害专业判断和来访者利益，伦理规范明确要求避免。"
+                    },
+                    {
+                        "question": "知情同意的内容包括？",
+                        "options": {"A": "咨询目标和方式", "B": "保密及其限制", "C": "费用和时长", "D": "以上都是"},
+                        "answer": "D",
+                        "analysis": "知情同意应包含：咨询性质、目标、方法、风险收益、保密条款、费用、时长、来访者权利等。"
+                    }
+                ]
+            }
+        ]
+        
+        topic_idx = min((day - 151) // 6, len(question_bank) - 1)
+        selected_topic = question_bank[topic_idx]
+        selected_questions = [selected_topic["questions"][i % len(selected_topic["questions"])] for i in range(10)]
+        return self._format_questions(selected_questions, day, lesson_title, selected_topic["topic"])
     
     def save_daily_lesson(self, day: int, full_content: str, simple_content: str, questions_content: str):
         """保存每日学习内容到知识库（完整版 + 简版）"""

@@ -309,29 +309,39 @@ def update_index(base_path, day, title):
     
     if current_day_key and day > index.get(current_day_key, 0):
         index[current_day_key] = day
-        if day<= 30:
-            index["current_stage"] = 1
-            index["stages"][0]["status"] = "in_progress"
-        elif day <= 60:
-            index["current_stage"] = 2
-            index["stages"][1]["status"] = "in_progress"
-            index["stages"][0]["status"] = "completed"
-        elif day <= 90:
-            index["current_stage"] = 3
-            index["stages"][2]["status"] = "in_progress"
-            index["stages"][1]["status"] = "completed"
-        elif day <= 120:
-            index["current_stage"] = 4
-            index["stages"][3]["status"] = "in_progress"
-            index["stages"][2]["status"] = "completed"
-        elif day <= 150:
-            index["current_stage"] = 5
-            index["stages"][4]["status"] = "in_progress"
-            index["stages"][3]["status"] = "completed"
+        
+        # 支持两种格式：studyPlan.stages（新格式）和 stages（旧格式）
+        if "studyPlan" in index and "stages" in index["studyPlan"]:
+            stages = index["studyPlan"]["stages"]
+        elif "stages" in index:
+            stages = index["stages"]
         else:
-            index["current_stage"] = 6
-            index["stages"][5]["status"] = "in_progress"
-            index["stages"][4]["status"] = "completed"
+            stages = None
+        
+        if stages:
+            if day<= 30:
+                index["current_stage"] = 1
+                stages[0]["status"] = "in_progress"
+            elif day <= 60:
+                index["current_stage"] = 2
+                stages[1]["status"] = "in_progress"
+                stages[0]["status"] = "completed"
+            elif day <= 90:
+                index["current_stage"] = 3
+                stages[2]["status"] = "in_progress"
+                stages[1]["status"] = "completed"
+            elif day <= 120:
+                index["current_stage"] = 4
+                stages[3]["status"] = "in_progress"
+                stages[2]["status"] = "completed"
+            elif day <= 150:
+                index["current_stage"] = 5
+                stages[4]["status"] = "in_progress"
+                stages[3]["status"] = "completed"
+            else:
+                index["current_stage"] = 6
+                stages[5]["status"] = "in_progress"
+                stages[4]["status"] = "completed"
     
     index["total_lessons"] = len(index["lessons"])
     index["last_updated"] = today
